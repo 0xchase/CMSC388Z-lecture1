@@ -1,4 +1,8 @@
 # 09/03 Lecture 1
+
+# Table of Content
+[TOC]
+
 ## Reference
 
 - [The Rust Programming Language](https://doc.rust-lang.org/book/) (TRPL)
