@@ -87,30 +87,17 @@ int main() {
 
 ```
 
-- dangling pointers (uses of pointers to freed memory)
+Other issues:
+ - Has anyone taken 414?
+ - Buffer overrun
+ - Use after free, double free, etc
+ - The most serious vulnerabilities todays are normally heap related browser vulnerabilities. 
 
-… which can happen via the stack, too:
-
-```cpp
-int *foo(void) { int z = 5; return &z; }
-void bar(void) {
-  int *x = foo();
-  *x = 5; /* oops! */
-}
-```
-
-[Heartbleed](https://xkcd.com/1354/).
+[Leave up this xkcd](https://xkcd.com/1354/).
 
 - Problem: C and C++ allow for direct memory dereference, no checking.
-Systems languages are what we built everything on top of! Even other languages are built on top of C and C++:
-    - Java Virtual Machine
-    - CPython
 
 **Why then, do we not check things at runtime?**
-
-#### Null References -- Billion Dollar Mistake
-
-> I call it my billion-dollar mistake. It was the invention of the null reference in 1965... My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years. [name=Tony Hoare]
 
 ### Performance
 
@@ -120,15 +107,10 @@ Systems languages are what we built everything on top of! Even other languages a
 Rust performs similar (even [slightly better](https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/rust-gpp.html)) than C++.
 
 
-### Concurrency
-
-- Computers are multicore, need for parallelism.
-  ![](https://www.karlrupp.net/wp-content/uploads/2015/06/35years.png)
-
-- Concurrency is hard:
-  https://en.wikipedia.org/wiki/Therac-25
+### Concurrency and data races
 
 - No data race in rust (achieved by ownership)
+
 ### Examples of Rust Safety
 
 No null pointer dereferences. (Not unique to Rust)
@@ -217,6 +199,8 @@ $ cd hello_cargo
 - Building and Running a Cargo Project
 ```bash
 $ cargo build
+
+find target/.
 ```
 
 ```bash
@@ -451,27 +435,6 @@ fn main() {
 }
 ```
 
-##### Numeric Operations
-
-```rust
-fn main() {
-    // addition
-    let sum = 5 + 10;
-
-    // subtraction
-    let difference = 95.5 - 4.3;
-
-    // multiplication
-    let product = 4 * 30;
-
-    // division
-    let quotient = 56.7 / 32.2;
-
-    // remainder
-    let remainder = 43 % 5;
-}
-```
-
 4. Booleans
 
 ```rust
@@ -573,6 +536,22 @@ Another way to have a collection of multiple values is with an array. Unlike a t
 #### Statements and Expressions
 - Statements are instructions that perform some action and **do not return a value. **
 - Expressions evaluate to a resulting value. 
+
+
+(copy/paste this)
+```rust
+// function body
+fn main() {
+    let x = 5;
+
+    let y = {
+        let x = 3;
+        x + 1 
+    }; // statement
+
+    println!("The value of y is: {}", y);
+}
+```
 
 ```rust
 // function body
@@ -724,17 +703,19 @@ Put such tests in the same file as your code
 
 
 ```rust
+fn main() {
+    println!("{}", bad_add(1, 2));
+}
+
 fn bad_add(a: i32, b: i32) -> i32 {
     a - b
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_bad_add () {
-        assert_eq!(bad_add(1,3),3);
-    }
+#[test]
+fn test_bad_add () {
+    assert_eq!(bad_add(1,3),3);
 }
+
 
 ```
 
@@ -806,8 +787,9 @@ pub fn test_negative_add() {
 
 #### slice
 
-We can take slice of vector, array and string.  
+We can take slice of vector, array and string. 
 
+Slice is a portion of some contiguous chunk of memory. 
 
 ```rust
 pub fn slices() {
@@ -850,6 +832,11 @@ Handling of strings is a major security risk!
 Examples: https://owasp.org/www-project-top-ten/
 Why are strings so hard to get right?
 
+Most common string types in rust are String, and str.
+ - String is the dynamic heap string type, like Vec: use it when you need to own or modify your string data.
+ - str is an immutable1 sequence of UTF-8 bytes of dynamic length somewhere in memory. Since the size is unknown, one can only handle it behind a pointer. This means that str most commonly2 appears as &str: a reference to some UTF-8 data, normally called a "string slice" or just a "slice". A slice is just a view onto some data, and that data can be anywhere.
+
+
 ![](https://doc.rust-lang.org/book/img/trpl04-06.svg =320x)
 ```rust
 pub fn strings() {
@@ -868,40 +855,7 @@ pub fn strings() {
             s3.len()
     ); // 16 36 59
 ```
-The problem is, the string we see is not the way they are stored in Rust. Rust strores each string as  a `Vec<u8>`. If the string encodes only UTF-8 characters, each byte corresponds to a character, like `s1`. However, if the string contains non-UTF-8 characters, such as unicode characters, for example `s2` and `s3`, as you can see, the length of the strings are not equalt to the number of characters we see in the string, this is because   
-
-
-    // The problem with C style char*:
-    // Not obvious if it's modifyiable.
-
-    // Where does this reference live
-    // .data
-    let s: &str = "rust";
-    // ^ inmutable.
-
-    // Rust seems to have several types of strings: str, &str, and String.
-    // Why do we do this? People don't like this about rust.
-    // But like everything else, Rust has good reason!
-
-    // Heap allocated, string.
-    // UTF-8, growable, modifyiable, guaranteed to be correct UTF-8
-    let s: String = "rust".to_string();
-
-    // Example from O'Reilly book
-    let noodles: String = "noodles".to_string();
-    let oodles: &str = &noodles[1..];
-    let poodles = "ಠ_ಠ"; // Pre allocated read-only memory.
-
-    // Notice `str` by _itself_ is a type! What does this mean?
-    // It's called an "unsized type".
-    // Why don't languages like Java or Python have this issue?
-
-    // String are laid out in pretty much the same way as arrays.
-    // Notice the analogies between strings and &str:
-    // String ~~ Vec<T>
-    // &str ~~ &[T]
-    // str ~~ [T]
-}
+The problem is, the string we see is not the way they are stored in Rust. Rust strores each string as  a `Vec<u8>`. If the string encodes only UTF-8 characters, each byte corresponds to a character, like `s1`. However, if the string contains non-UTF-8 characters, such as unicode characters, for example `s2` and `s3`, as you can see, the length of the strings are not equalt to the number of characters we see in the string. 
 ```
 
 ### Functions
