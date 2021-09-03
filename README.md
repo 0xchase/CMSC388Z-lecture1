@@ -1,29 +1,5 @@
 # 09/03 Lecture 1
 
-## Reference
-
-- [The Rust Programming Language](https://doc.rust-lang.org/book/) (TRPL)
-- [UPenn CIS 198](https://www.cis.upenn.edu/~cis198/)
-- [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)
-
-This lecture covers
-1. install/update `rustc`
-2. cargo basics
-3. variables and mutability
-4. data types
-5. comments
-6. control flow
-
-For lecture 1, the plan is to take about 10-15 mins to go over the course webpage to talk about
-
-There are 5 assignments and 1 final project. All of them should be submitted to gradescope.
-In the first 6 weeks, we will cover the rust basics, and then we will spend 4 lectures on design patterns and some other intermediate topics, and on December, we will have a class talking aboug advanced topics and a class for project presentation (I guess thes is what project demo means).
-The course content will overlap with CMSC330, but we will include new stuffs such as design patterns.
-Some other stuffs you think are important.
- 
-
-Then, we need to cover the notes I shared. As all materials are used in the first assignment, you may need to skip some parts and tell students to refer to the notes if they have any questions.
-
 ## Course introduction
 
 First talk through the [website](http://www.cs.umd.edu/class/fall2021/cmsc388Z/)
@@ -34,13 +10,20 @@ In the first 6 weeks, we will cover the rust basics, and then we will spend 4 le
 
 The course content will overlap with CMSC330, but we will include new stuffs such as design patterns.
 
+## Few survey questions
+
+ - How many of you have taken 330?
+ - How many of you feel you've retained at least half the content?
+ - How many of you have exposure to Rust outside of 330?
+ - How many of you feel confident enough that you could explain the concept of ownership in Rust?
+
 ## Why Rust?
 
 ### Rust Overview
 
 "Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety."
 
-In other words: Rust is designed for speed, safety, and concurrency.
+In other words: Rust is designed for speed, safety, and concurrency. 
 
 #### What is "Systems Programming"?
 
@@ -83,7 +66,6 @@ In particular, Rust's goals of memory safety and trustworthy concurrency are wha
 ### Type Safety and Memory Safety
 
 A language is said to be [memory-safe](https://www.zdnet.com/article/microsoft-70-percent-of-all-security-bugs-are-memory-safety-issues/) if all programs written in that language have defined semantics for all possible states.
-
 
 #### Aside: [Typing](https://medium.com/android-news/magic-lies-here-statically-typed-vs-dynamically-typed-languages-d151c7f95e2b)
 **Rust is a [type safe and statically typed](http://www.cs.umd.edu/class/spring2021/cmsc330/lectures/26-types.pdf) language:**
