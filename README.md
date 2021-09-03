@@ -12,9 +12,8 @@ The course content will overlap with CMSC330, but we will include new stuffs suc
 
 ## Few survey questions
 
- - How many of you have taken 330?
+ - How many of you have taken 330? How many of you have exposure to Rust outside of 330?
  - How many of you feel you've retained at least half the content?
- - How many of you have exposure to Rust outside of 330?
  - How many of you feel confident enough that you could explain the concept of ownership in Rust?
 
 ## Why Rust?
