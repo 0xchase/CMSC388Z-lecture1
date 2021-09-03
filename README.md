@@ -924,13 +924,3 @@ fn who_is_good(name: String) {
     println!("{} is good.", name);
 }
 ```
-
-**Credit to: [UPenn CIS 198](https://github.com/upenn-cis198)**
-
-
-
-
-
-
-
-
