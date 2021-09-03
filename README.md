@@ -6,8 +6,6 @@
 - [UPenn CIS 198](https://www.cis.upenn.edu/~cis198/)
 - [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)
 
-
-
 This lecture covers
 1. install/update `rustc`
 2. cargo basics
@@ -16,7 +14,25 @@ This lecture covers
 5. comments
 6. control flow
 
-## [Course introduction](http://www.cs.umd.edu/class/fall2021/cmsc388Z/)
+For lecture 1, the plan is to take about 10-15 mins to go over the course webpage to talk about
+
+There are 5 assignments and 1 final project. All of them should be submitted to gradescope.
+In the first 6 weeks, we will cover the rust basics, and then we will spend 4 lectures on design patterns and some other intermediate topics, and on December, we will have a class talking aboug advanced topics and a class for project presentation (I guess thes is what project demo means).
+The course content will overlap with CMSC330, but we will include new stuffs such as design patterns.
+Some other stuffs you think are important.
+ 
+
+Then, we need to cover the notes I shared. As all materials are used in the first assignment, you may need to skip some parts and tell students to refer to the notes if they have any questions.
+
+## Course introduction
+
+First talk through the [website](http://www.cs.umd.edu/class/fall2021/cmsc388Z/)
+
+There are 5 assignments and 1 final project. All of them should be submitted to gradescope.
+
+In the first 6 weeks, we will cover the rust basics, and then we will spend 4 lectures on design patterns and some other intermediate topics, and on December, we will have a class talking aboug advanced topics and a class for project presentation (I guess thes is what project demo means).
+
+The course content will overlap with CMSC330, but we will include new stuffs such as design patterns.
 
 ## Why Rust?
 
